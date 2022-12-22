@@ -18,18 +18,30 @@ def is_zero(value: float, precision: float) -> bool:
 
 
 def binary_search(
-    terms: list[float], start: float, end: float, precision: float, max_iter: int = 100
+    terms: list[float],
+    start: float,
+    end: float,
+    precision: float,
+    max_iter: int = 100,
 ) -> float | None:
     """Find all solutions to a polynomial"""
-    if is_zero(evaluate_polynomial(terms, start), precision):
-        return start
-    if is_zero(evaluate_polynomial(terms, end), precision):
-        return end
     if evaluate_polynomial(terms, start) * evaluate_polynomial(terms, end) > 0:
+        start_value = evaluate_polynomial(terms, start)
+        end_value = evaluate_polynomial(terms, end)
+        if is_zero(
+            start_value, precision ** (1 / 2) * max(abs(start_value), abs(end_value))
+        ) or is_zero(
+            end_value, precision ** (1 / 2) * max(abs(start_value), abs(end_value))
+        ):
+            if abs(start_value) < abs(end_value):
+                return start
+            return end
         return None
     i = 0
     mid_value = 0.0
-    while not (is_zero(start - end, precision) and is_zero(mid_value, precision)):
+    while not (
+        is_zero(start - end, precision) and is_zero(mid_value, precision)
+    ) and not is_zero(start - end, precision**2):
         start_value = evaluate_polynomial(terms, start)
         mid_value = evaluate_polynomial(terms, (start + end) / 2)
         if start_value * mid_value > 0:
@@ -39,6 +51,8 @@ def binary_search(
 
         i += 1
         if i > max_iter:
+            print("max")
+            print(mid_value)
             return None
     return (start + end) / 2
 
@@ -80,14 +94,4 @@ def approximate_polynomial(
         if candidate is not None:
             roots.append(candidate)
     print("roots", terms, roots)
-    return roots
-
-
-# print(approximate_polynomial([1, -8, 21, -20, 5], -100, 100, 0.0001))
-print(approximate_polynomial([1, 0, -1, 0, 0], -100, 100, 0.000001))
-# print(
-#     approximate_polynomial(
-#         [1, 69, -2646, 20820, 130344, -2579424, 12394496, 19568640], -100, 100, 0.0001
-#     )
-
-# print(binary_search([3, 0, 0], 0, 100, 0.0001))
+    return list(sorted(roots))
