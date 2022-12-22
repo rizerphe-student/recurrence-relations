@@ -1,6 +1,7 @@
-Рекурентні рівняння
+#Рекурентні рівняння
 
 find_derivative(terms)
+
     terms: list[float]
     Функція приймає список значень, які є коєфіцієнтами з рухомою крапкою у рівнянні
     Кількість значень - 1  дорівнює найбільшому зі степенів у рівнянні
@@ -8,6 +9,7 @@ find_derivative(terms)
     return list[froat]
 
 evaluate_polynomial(terms, value)
+
     terms: list[float]
     value: float
     Функція приймає список "terms", який містить коефіцієнти з рухомою крапкою у рівнянні 
@@ -16,6 +18,7 @@ evaluate_polynomial(terms, value)
     Функція повертає розв'язок рівняння(значення функції в точці 'value')
 
 is_zero(value, precision) 
+
     value: float
     precision: float
     precision - точність
@@ -23,6 +26,7 @@ is_zero(value, precision)
     return True or False
 
 binary_search(terms, start, end, precision)
+
     terms: list[float]
     start: float
     end: float
@@ -32,6 +36,7 @@ binary_search(terms, start, end, precision)
     return float
 
 approximate_polynomial(terms, start, end, precision)
+
     terms: list[float]
     start: float
     end: float
