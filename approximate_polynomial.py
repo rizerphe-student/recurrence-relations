@@ -22,24 +22,18 @@ def remove_duplicates(roots: set[float], precision: float) -> set[float]:
     return {round(root, int(math.log10(1 / precision))) for root in roots}
 
 
-def binary_search(
-    terms: list[float], start: float, end: float, precision: float
-) -> list[float]:
+def binary_search(terms: list[float], start: float, end: float, precision: float) -> float:
     """Find all solutions to a polynomial"""
     while not is_zero(start - end, precision):
         sign = evaluate_polynomial(terms, start) * evaluate_polynomial(
-            terms, (start + end) / 2
-        )
+            terms, (start + end) / 2)
         if sign <= 0:
             end = (start + end) / 2
         else:
             start = (start + end) / 2
     return (start + end) / 2
 
-
-def approximate_polynomial(
-    terms: list[float], start: float, end: float, precision: float
-) -> set[float]:
+def approximate_polynomial(terms: list[float], start: float, end: float, precision: float) -> set[float]:
     """Approximate all solutions to a polynomial"""
     # Solve a linear equation
     if len(terms) == 2:
@@ -79,12 +73,12 @@ def approximate_polynomial(
     print("roots", terms, roots)
     return roots
 
-
-print(approximate_polynomial([1, 0, -1, 0, 0], -100, 100, 0.0001))
+print(approximate_polynomial([1, 0, -1, 0], -100, 100, 0.0001))
+# print(approximate_polynomial([1, 0, -1, 0, 0], -100, 100, 0.0001))
+# print(approximate_polynomial([1, 2], -100, 100, 0.0001))
 # print(
 #     approximate_polynomial(
 #         [1, 69, -2646, 20820, 130344, -2579424, 12394496, 19568640], -100, 100, 0.0001
 #     )
-# )
 
 # print(binary_search([3, 0, 0], 0, 100, 0.0001))
