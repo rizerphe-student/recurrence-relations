@@ -4,14 +4,14 @@ Determinants are found with expansion by minors
 """
 
 
-def minor(matrix: list[list[float]], row: int, column: int):
+def minor(matrix: list[list[float]], row: int, column: int) -> list[list[float]]:
     """Return the minor of the matrix."""
     return [
         row[:column] + row[column + 1 :] for row in (matrix[:row] + matrix[row + 1 :])
     ]
 
 
-def determinant(matrix: list[list[float]]):
+def determinant(matrix: list[list[float]]) -> float:
     """Return the determinant of the matrix."""
     if len(matrix) == 1:
         return matrix[0][0]
@@ -21,14 +21,18 @@ def determinant(matrix: list[list[float]]):
     )
 
 
-def replace_column(matrix: list[list[float]], column: list[float], index: int):
+def replace_column(
+    matrix: list[list[float]], column: list[float], index: int
+) -> list[list[float]]:
     """Return a copy of the matrix with the specified column replaced."""
     return [
         row[:index] + [column[i]] + row[index + 1 :] for i, row in enumerate(matrix)
     ]
 
 
-def cramers_rule(coefficients: list[list[float]], constants: list[float]):
+def cramers_rule(
+    coefficients: list[list[float]], constants: list[float]
+) -> list[float]:
     """Solve a system of linear equations using Cramer's rule
 
     For the input data:
@@ -45,13 +49,10 @@ def cramers_rule(coefficients: list[list[float]], constants: list[float]):
     And returns the list:
         [x, y, z]
     """
-    d = determinant(coefficients)
-    if d == 0:
+    det = determinant(coefficients)
+    if det == 0:
         raise ValueError("The system has no unique solution.")
     return [
-        determinant(replace_column(coefficients, constants, i)) / d
+        determinant(replace_column(coefficients, constants, i)) / det
         for i in range(len(coefficients))
     ]
-
-
-print(determinant([[3, -5, 1], [6, 0, 2], [4, -1, 7]]))
