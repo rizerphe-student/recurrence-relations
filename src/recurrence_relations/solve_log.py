@@ -54,12 +54,11 @@ def matrix_to_power(matrix: list[list[float]], power: int) -> list[list[float]]:
     Returns:
         list[list[float]]: result
     """
-    if power == 1:
-        return matrix
+    if power == 2:
+        return multiply_matricies(matrix, matrix)
     subtask = power // 2
-    return multiply_matricies(
-        matrix_to_power(matrix, subtask), matrix_to_power(matrix, power - subtask)
-    )
+    submatrix = matrix_to_power(matrix_to_power(matrix, subtask), 2)
+    return multiply_matricies(submatrix, matrix) if power % 2 else submatrix
 
 
 def vector_multip(matrix: list[list[float]], vector: list[float]) -> list[float]:
