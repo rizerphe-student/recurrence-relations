@@ -1,5 +1,4 @@
 """Approximate all solutions to a polynomial"""
-import math
 
 
 def find_derivative(terms: list[float]) -> list[float]:
@@ -22,12 +21,19 @@ def binary_search(
     start: float,
     end: float,
     precision: float,
-    max_iter: int = 100,
 ) -> float | None:
-    """Find all solutions to a polynomial"""
+    """Find a solution to a polynomial within a range"""
     if evaluate_polynomial(terms, start) * evaluate_polynomial(terms, end) > 0:
+        # If the polynomial has the same sign at both ends, either there is no root
+        # or one of the ends is the extremum that's a root
         start_value = evaluate_polynomial(terms, start)
         end_value = evaluate_polynomial(terms, end)
+
+        # If one of the ends of the range is close to zero
+        # return the range end that is closer to zero
+
+        # The precision magic was figured out by trial and error
+        # and is not guaranteed to work for all cases
         if is_zero(
             start_value, precision ** (1 / 2) * max(abs(start_value), abs(end_value))
         ) or is_zero(
@@ -36,8 +42,8 @@ def binary_search(
             if abs(start_value) < abs(end_value):
                 return start
             return end
+        # Otherwise, there is no root in the range
         return None
-    i = 0
     mid_value = 0.0
     while not (
         is_zero(start - end, precision) and is_zero(mid_value, precision)
@@ -48,12 +54,6 @@ def binary_search(
             start = (start + end) / 2
         else:
             end = (start + end) / 2
-
-        i += 1
-        if i > max_iter:
-            print("max")
-            print(mid_value)
-            return None
     return (start + end) / 2
 
 
@@ -68,19 +68,13 @@ def approximate_polynomial(
     # Find all extremas
     extremas = approximate_polynomial(find_derivative(terms), start, end, precision)
     points_of_interest = extremas + [start, end]
-    print("extremas", terms, extremas)
-    print("points_of_interest", terms, points_of_interest)
 
     # Find all ranges that contain a root
     ranges = []
-    sign = evaluate_polynomial(terms, min(points_of_interest))
     prev_loc = start
     for extreme in sorted(points_of_interest):
-        new_sign = evaluate_polynomial(terms, extreme)
         ranges.append((prev_loc, extreme))
         prev_loc = extreme
-        sign = new_sign
-    print("ranges", terms, ranges)
 
     # Find all roots in each range
     roots = []
@@ -93,5 +87,14 @@ def approximate_polynomial(
         candidate = binary_search(terms, start_, end_, precision)
         if candidate is not None:
             roots.append(candidate)
-    print("roots", terms, roots)
     return list(sorted(roots))
+
+
+def approximate_recurrence_polynomial(
+    term: list[float], start: float, end: float, precision: float
+) -> list[float]:
+    """Transforms list"""
+    terms = [1.0]
+    for elem in term:
+        terms.append(-elem)
+    return approximate_polynomial(terms, start, end, precision)

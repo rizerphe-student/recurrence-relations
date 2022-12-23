@@ -1,4 +1,5 @@
-#Рекурентні рівняння
+# Рекурентні рівняння
+![Tests](https://github.com/rizerphe/recurrence-relations/actions/workflows/tests.yml/badge.svg)
 
 find_derivative(terms)
 
@@ -46,12 +47,10 @@ approximate_polynomial(terms, start, end, precision)
     precision: float
     precision - точність
 
-    Якщо довжина списку дорівнює 2, то функція повертає множину {-terms[1] / terms[0]}
-    В іншому випадку функція :
-        шукає екстремуми з похідної : approximate_polynomial(find_derivative(terms), start, end, precision)
-        проміжки функції
-        корені рівняння
-    return list[float]
+    Шукає приблизні розв'язки рівняння за заданим списком коефіцієнтів та вільним членом,
+    (майже завжди) враховуючи повтори коренів.
+    Працює з припущенням, що всі корені є в інтерваіл (start, end).
+    Для рівняння x^2 + 2x + 3 = 0 список коефіцієнтів має вигляд [1, 2, 3]
 
 rounder(lst_root) 
 
