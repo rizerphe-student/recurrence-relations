@@ -6,8 +6,7 @@ from operator import mul
 import pytest
 from hypothesis import assume, given
 from hypothesis.strategies import floats, lists
-
-import cramers_rule
+from recurrence_relations import cramers_rule
 
 
 @given(

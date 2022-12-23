@@ -1,20 +1,24 @@
 """Approximate all solutions to a polynomial"""
 import math
 import timeit
-from typing import List
 from copy import deepcopy
+from typing import List
+
 
 def find_derivative(terms: list[float]) -> list[float]:
     """Find the derivative of a polynomial"""
     return [x * (len(terms) - i - 1) for i, x in enumerate(terms[:-1])]
 
+
 def evaluate_polynomial(terms: list[float], value: float) -> float:
     """Evaluate a polynomial"""
     return sum(x * value ** (len(terms) - i - 1) for i, x in enumerate(terms))
 
+
 def is_zero(value: float, precision: float) -> bool:
     """Check if a value is close to zero"""
     return abs(value) < precision
+
 
 def binary_search(
     terms: list[float], start: float, end: float, precision: float, max_iter: int = 100
@@ -35,16 +39,19 @@ def binary_search(
             start = (start + end) / 2
         else:
             end = (start + end) / 2
+
         i += 1
         if i > max_iter:
             return None
     return (start + end) / 2
+
 
 def approximate_polynomial(
     terms: list[float], start: float, end: float, precision: float
 ) -> list[float]:
     """Approximate all solutions to a polynomial"""
     # Solve a linear equation
+
     if len(terms) == 2:
         return [-terms[1] / terms[0]]
 
@@ -79,6 +86,7 @@ def approximate_polynomial(
     print("roots", terms, roots)
     return roots
 
+
 def rounder(lst_root: List[float]) -> List[float]:
     """
     Args:
@@ -90,6 +98,7 @@ def rounder(lst_root: List[float]) -> List[float]:
     for ind, el in enumerate(lst_root):
         lst_root[ind] = round(el)
     return lst_root
+
 
 def expression_builder(roots_lst: List[float], coof) -> str:
     res = []
@@ -109,15 +118,17 @@ def expression_builder(roots_lst: List[float], coof) -> str:
     for n in range(coof):
         small = []
         for j in res:
-           small.append(eval(j))
+            small.append(eval(j))
         fin_res.append(small)
     return fin_res
+
 
 def minor(matrix: list[list[float]], row: int, column: int):
     """Return the minor of the matrix."""
     return [
         row[:column] + row[column + 1 :] for row in (matrix[:row] + matrix[row + 1 :])
     ]
+
 
 def determinant(matrix: list[list[float]]):
     """Return the determinant of the matrix."""
@@ -127,11 +138,15 @@ def determinant(matrix: list[list[float]]):
         (-1) ** i * matrix[0][i] * determinant(minor(matrix, 0, i))
         for i in range(len(matrix))
     )
+
+
 def replace_column(matrix: list[list[float]], column: list[float], index: int):
     """Return a copy of the matrix with the specified column replaced."""
     return [
         row[:index] + [column[i]] + row[index + 1 :] for i, row in enumerate(matrix)
     ]
+
+
 def cramers_rule(coefficients: list[list[float]], constants: list[float]):
     """Solve a system of linear equations using Cramer's rule
     For the input data:
@@ -156,32 +171,36 @@ def cramers_rule(coefficients: list[list[float]], constants: list[float]):
         for i in range(len(coefficients))
     ]
 
+
 def make_eq(lst_koef, lst_root) -> str:
     """
-    makes general equation for recurrent... 
+    makes general equation for recurrent...
     >>> make_eq([-2, 24, 17], [-9, 2, 2])
     -2*(-9)**n + ((24)+(17)*n**1)*(2)**n
     """
-    res = '0'
+
+    res = "0"
     for i in set(lst_root):
         if lst_root.count(i) > 1:
-            res += f' + ('
-            res += f'({lst_koef[lst_root.index(i)]})'
+            res += f" + ("
+            res += f"({lst_koef[lst_root.index(i)]})"
             for j in range(1, lst_root.count(i)):
-                res += f'+({lst_koef[lst_root.index(i)+j]})*n**{j}'
-            res += f') * ({i})**n'
+                res += f"+({lst_koef[lst_root.index(i)+j]})*n**{j}"
+            res += f") * ({i})**n"
         else:
-            res += f' + ({lst_koef[lst_root.index(i)]})*({i})**n'
-    res = res.replace('0 + ', '')
+            res += f" + ({lst_koef[lst_root.index(i)]})*({i})**n"
+    res = res.replace("0 + ", "")
     return res
 
-def first_n(eq: str, n: int) -> list: 
+
+def first_n(eq: str, n: int) -> list:
     """returns the list of n first sequence members"""
     res = []
     for i in range(n):
-        a_n = eval(eq.replace('n', 'i'))
+        a_n = eval(eq.replace("n", "i"))
         res.append(a_n)
     return res
+
 
 def matrix_creator(cof_lst: List[float]) -> List[List[float]]:
     """
@@ -194,17 +213,20 @@ def matrix_creator(cof_lst: List[float]) -> List[List[float]]:
     size = len(cof_lst)
     lst = []
     ind = 0
-    while ind < size-1:
-        small = [0]*(ind+1)
+    while ind < size - 1:
+        small = [0] * (ind + 1)
         small.append(1)
-        small.extend([0]*(size-ind-2))
+        small.extend([0] * (size - ind - 2))
         lst.append(small)
         ind += 1
     cof_lst.reverse()
     lst.append(cof_lst)
     return lst
 
-def multiply_matricies(matrix: List[List[float]], subtask: List[List[float]]) -> List[List[float]]:
+
+def multiply_matricies(
+    matrix: List[List[float]], subtask: List[List[float]]
+) -> List[List[float]]:
     """
     Multiplies two matrixs
     Args:
@@ -221,6 +243,7 @@ def multiply_matricies(matrix: List[List[float]], subtask: List[List[float]]) ->
                 result[i][j] += matrix[i][k] * subtask[k][j]
     return result
 
+
 def matrix_to_power(matrix: List[List[float]], power: int) -> List[List[float]]:
     """
     Powers matrix to power
@@ -233,8 +256,10 @@ def matrix_to_power(matrix: List[List[float]], power: int) -> List[List[float]]:
     if power == 1:
         return matrix
     subtask = power // 2
-    return multiply_matricies(matrix_to_power(matrix, subtask),\
-matrix_to_power(matrix, power - subtask))
+    return multiply_matricies(
+        matrix_to_power(matrix, subtask), matrix_to_power(matrix, power - subtask)
+    )
+
 
 def vector_multip(matrix: List[float], vector: List[float]) -> List[float]:
     """
@@ -249,10 +274,11 @@ def vector_multip(matrix: List[float], vector: List[float]) -> List[float]:
         new_value = 0
         ind = 0
         for element in row:
-            new_value += vector[ind]*element
+            new_value += vector[ind] * element
             ind += 1
         new_vector.append(new_value)
     return new_vector
+
 
 def n_finder(cof_lst: List[float], el_lst: List, number: int) -> float:
     """
@@ -267,6 +293,7 @@ def n_finder(cof_lst: List[float], el_lst: List, number: int) -> float:
     matrix = matrix_to_power(matrix_creator(cof_lst), number)
     return vector_multip(matrix, el_lst)[1]
 
+
 if __name__ == "__main__":
     values_lst = [2, 9, 29]
     a_coof_lst = [1, 7, 16, 12]
@@ -278,8 +305,12 @@ if __name__ == "__main__":
     c_list = cramers_rule(x, values_lst)
     print(c_list)
     print(first_n(make_eq(c_list, lst_root), 10))
-    print(n_finder(real_lst, values_lst, 10))
-    print('#4', timeit.timeit(stmt="n_finder([-7, -16, -12], [2, 9, 29], 4)", setup="from __main__ import n_finder"))
-    print('#3', timeit.timeit(stmt="first_n(make_eq([73.0, -71.0, -43.0], [-3, -2, -2]), 4)", setup=\
-"from __main__ import first_n, make_eq"))
-
+    print(n_finder(real_lst, values_lst, 1000))
+    timeit.timeit(
+        stmt="n_finder([-7, -16, -12], [2, 9, 29], 8)",
+        setup="from __main__ import n_finder",
+    )
+    timeit.timeit(
+        stmt="first_n(make_eq([73.0, -71.0, -43.0], [-3, -2, -2]), 8)",
+        setup="from __main__ import first_n",
+    )

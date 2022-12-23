@@ -1,0 +1,9 @@
+tox
+
+mypy
+flake8
+pylint
+
+pytest
+pytest-cov
+hypothesis

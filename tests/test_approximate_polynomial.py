@@ -2,9 +2,7 @@
 import pytest
 from hypothesis import assume, given
 from hypothesis.strategies import floats, lists
-
-import approximate_polynomial
-import helpers
+from recurrence_relations import approximate_polynomial, helpers
 
 
 @given(

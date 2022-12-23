@@ -1,5 +1,0 @@
-hypothesis
-pytest
-mypy
-flake8
-pylint
