@@ -50,8 +50,6 @@ def binary_search(
 
         i += 1
         if i > max_iter:
-            print("max")
-            print(mid_value)
             return None
     return (start + end) / 2
 
@@ -67,8 +65,6 @@ def approximate_polynomial(
     # Find all extremas
     extremas = approximate_polynomial(find_derivative(terms), start, end, precision)
     points_of_interest = extremas + [start, end]
-    print("extremas", terms, extremas)
-    print("points_of_interest", terms, points_of_interest)
 
     # Find all ranges that contain a root
     ranges = []
@@ -76,7 +72,6 @@ def approximate_polynomial(
     for extreme in sorted(points_of_interest):
         ranges.append((prev_loc, extreme))
         prev_loc = extreme
-    print("ranges", terms, ranges)
 
     # Find all roots in each range
     roots = []
@@ -89,7 +84,6 @@ def approximate_polynomial(
         candidate = binary_search(terms, start_, end_, precision)
         if candidate is not None:
             roots.append(candidate)
-    print("roots", terms, roots)
     return list(sorted(roots))
 
 
