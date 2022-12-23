@@ -21,7 +21,6 @@ def binary_search(
     start: float,
     end: float,
     precision: float,
-    max_iter: int = 100,
 ) -> float | None:
     """Find a solution to a polynomial within a range"""
     if evaluate_polynomial(terms, start) * evaluate_polynomial(terms, end) > 0:
@@ -45,7 +44,6 @@ def binary_search(
             return end
         # Otherwise, there is no root in the range
         return None
-    i = 0
     mid_value = 0.0
     while not (
         is_zero(start - end, precision) and is_zero(mid_value, precision)
@@ -56,10 +54,6 @@ def binary_search(
             start = (start + end) / 2
         else:
             end = (start + end) / 2
-
-        i += 1
-        if i > max_iter:
-            return None
     return (start + end) / 2
 
 

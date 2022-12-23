@@ -2,7 +2,6 @@
 
 import timeit
 from copy import deepcopy
-from typing import List
 
 from recurrence_relations.approximate_polynomial import \
     approximate_recurrence_polynomial as approximate_polynomial
@@ -11,27 +10,27 @@ from recurrence_relations.solve_constant import first_n, make_eq
 from recurrence_relations.solve_log import n_finder
 
 
-def rounder(lst_root: List[float]) -> List[float]:
+def rounder(lst_root: list[float]) -> list[float]:
     """
     Rounds all el in list
     Args:
-        lst_root (List[float]): list to round
+        lst_root (list[float]): list to round
     Returns:
-        List[float]: result
+        list[float]: result
     """
     for ind, ele in enumerate(lst_root):
         lst_root[ind] = round(ele)
     return lst_root
 
 
-def expression_builder(roots_lst: List[float], coof: int) -> List[List[float]]:
+def expression_builder(roots_lst: list[float], coof: int) -> list[list[float]]:
     """
     Counts coof
     Args:
-        roots_lst (List[float]): list of roots2
+        roots_lst (list[float]): list of roots2
         coof (int): amount of roots
     Returns:
-        List[List[float]]: list of roots
+        list[list[float]]: list of roots
     """
     res = []
     fin_res = []
@@ -57,13 +56,15 @@ def expression_builder(roots_lst: List[float], coof: int) -> List[List[float]]:
 
 
 if __name__ == "__main__":
-    values_lst = [2, 9, 29]
-    coof_lst = [-7, -16, -12]
+    values_lst = [2.0, 9.0, 29.0]
+    coof_lst = [-7.0, -16.0, -12.0]
     lst_roots = rounder(approximate_polynomial(coof_lst, -100, 100, 0.000001))
     cramers_coof = expression_builder(lst_roots, len(values_lst))
     c_list = cramers_rule(cramers_coof, values_lst)
     print(first_n(make_eq(c_list, lst_roots), 10))
     print(n_finder(coof_lst, values_lst, 1000))
+    print(first_n(make_eq(c_list, lst_roots), 100)[-1])
+    print(n_finder(coof_lst, values_lst, 100))
     print(timeit.timeit(lambda: n_finder([-7, -16, -12], [2, 9, 29], 100), number=1))
     print(
         timeit.timeit(

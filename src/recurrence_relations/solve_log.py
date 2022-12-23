@@ -1,22 +1,21 @@
 """
 Counts n el
 """
-from typing import List
 
 
-def matrix_creator(cof_lst: List[float]) -> List[List[float]]:
+def matrix_creator(cof_lst: list[float]) -> list[list[float]]:
     """
     Creates matrix from list of cof
     Args:
-        cof_lst (List[float]): list of cofs
+        cof_lst (list[float]): list of cofs
     Returns:
-        List[List[float]]: result matrix
+        list[list[float]]: result matrix
     """
     size = len(cof_lst)
     lst = []
     ind = 0
     while ind < size - 1:
-        small = [0] * (ind + 1)
+        small = [0.0] * (ind + 1)
         small.append(1)
         small.extend([0] * (size - ind - 2))
         lst.append(small)
@@ -27,18 +26,18 @@ def matrix_creator(cof_lst: List[float]) -> List[List[float]]:
 
 
 def multiply_matricies(
-    matrix: List[List[float]], subtask: List[List[float]]
-) -> List[List[float]]:
+    matrix: list[list[float]], subtask: list[list[float]]
+) -> list[list[float]]:
     """
     Multiplies two matrixs
     Args:
-        matrix (List[List[float]]): first
-        subtask (List[List[float]]): second
+        matrix (list[list[float]]): first
+        subtask (list[list[float]]): second
     Returns:
-        List[List[float]]: _description_
+        list[list[float]]: _description_
     """
     size = len(matrix)
-    result = [[0 for i in range(size)] for j in range(size)]
+    result = [[0.0 for i in range(size)] for j in range(size)]
     for i in range(size):
         for j in range(size):
             for k in range(size):
@@ -46,14 +45,14 @@ def multiply_matricies(
     return result
 
 
-def matrix_to_power(matrix: List[List[float]], power: int) -> List[List[float]]:
+def matrix_to_power(matrix: list[list[float]], power: int) -> list[list[float]]:
     """
     Powers matrix to power
     Args:
-        matrix (List[List[float]]): matrix
+        matrix (list[list[float]]): matrix
         power (int): power
     Returns:
-        List[List[float]]: result
+        list[list[float]]: result
     """
     if power == 1:
         return matrix
@@ -63,42 +62,40 @@ def matrix_to_power(matrix: List[List[float]], power: int) -> List[List[float]]:
     )
 
 
-def vector_multip(matrix: List[float], vector: List[float]) -> List[float]:
+def vector_multip(matrix: list[list[float]], vector: list[float]) -> list[float]:
     """
     Args:
-        matrix (List[float]): _description_
-        vector (List[float]): _description_
+        matrix (list[float]): _description_
+        vector (list[float]): _description_
     Returns:
-        List[float]: _description_
+        list[float]: _description_
     """
     new_vector = []
     for row in matrix:
-        new_value = 0
-        ind = 0
-        for element in row:
+        new_value = 0.0
+        for ind, element in enumerate(row):
             new_value += vector[ind] * element
-            ind += 1
         new_vector.append(new_value)
     return new_vector
 
 
-def n_finder(cof_lst: List[float], el_lst: List, number: int) -> float:
+def n_finder(cof_lst: list[float], el_lst: list, number: int) -> float:
     """
     Finds element
     Args:
-        cof_list (List[float]): list of cof
+        cof_list (list[float]): list of cof
         number (int): number to find
     Returns:
         float: number
     """
     if number <= len(el_lst):
-        return el_lst[number-1]
+        return el_lst[number - 1]
     number -= len(cof_lst)
     matrix = matrix_to_power(matrix_creator(cof_lst), number)
-    return vector_multip(matrix, el_lst)[len(cof_lst)-1]
+    return vector_multip(matrix, el_lst)[len(cof_lst) - 1]
 
 
 if __name__ == "__main__":
-    first_two = [2, 6]
-    cof_list = [-7, 18]
+    first_two = [2.0, 6.0]
+    cof_list = [-7.0, 18.0]
     print(n_finder(cof_list, first_two, 4))

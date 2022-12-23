@@ -10,6 +10,7 @@ from recurrence_relations import approximate_polynomial, helpers
         floats(
             allow_nan=False,
             allow_infinity=False,
+            allow_subnormal=False,
             min_value=-1_000_000,
             max_value=1_000_000,
         ),
@@ -32,8 +33,8 @@ def test_derivative(coefficients, constant):
         floats(
             allow_nan=False,
             allow_infinity=False,
-            min_value=-1_000,
-            max_value=1_000,
+            allow_subnormal=False,
+            width=16
         ),
         min_size=1,
         max_size=8,
