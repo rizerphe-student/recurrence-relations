@@ -74,7 +74,6 @@ def approximate_polynomial(
     ranges = []
     prev_loc = start
     for extreme in sorted(points_of_interest):
-        new_sign = evaluate_polynomial(terms, extreme)
         ranges.append((prev_loc, extreme))
         prev_loc = extreme
     print("ranges", terms, ranges)
@@ -92,3 +91,13 @@ def approximate_polynomial(
             roots.append(candidate)
     print("roots", terms, roots)
     return list(sorted(roots))
+
+
+def approximate_recurrence_polynomial(
+    term: list[float], start: float, end: float, precision: float
+) -> list[float]:
+    """Transforms list"""
+    terms = [1]
+    for elem in term:
+        terms.append(-elem)
+    return approximate_polynomial(terms, start, end, precision)
