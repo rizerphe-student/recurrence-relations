@@ -78,7 +78,7 @@ def vector_multip(matrix: list[list[float]], vector: list[float]) -> list[float]
     return new_vector
 
 
-def n_finder(cof_lst: list[float], el_lst: list, number: int) -> float:
+def n_finder(cof_lst: list[float], el_lst: list[float], number: int) -> float:
     """
     Finds element
     Args:

@@ -15,9 +15,11 @@ def determinant(matrix: list[list[float]]) -> float:
     """Return the determinant of the matrix."""
     if len(matrix) == 1:
         return matrix[0][0]
-    return sum(
-        (-1) ** i * matrix[0][i] * determinant(minor(matrix, 0, i))
-        for i in range(len(matrix))
+    return float(
+        sum(
+            matrix[0][i] * determinant(minor(matrix, 0, i)) * (-1) ** i
+            for i in range(len(matrix))
+        )
     )
 
 

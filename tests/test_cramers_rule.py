@@ -1,6 +1,6 @@
 """Test finding a solution to a system of linear equations using Cramer's rule."""
 from functools import reduce
-from itertools import combinations, starmap
+from itertools import starmap
 from operator import mul
 
 import pytest

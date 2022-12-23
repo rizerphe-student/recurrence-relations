@@ -24,7 +24,7 @@ def make_eq(lst_koef, lst_root) -> str:
     return res
 
 
-def first_n(eqa: str, number: int) -> list:
+def first_n(eqa: str, number: int) -> list[float]:
     """returns the list of n first sequence members"""
     res = []
     i = 0
