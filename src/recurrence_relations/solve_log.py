@@ -91,9 +91,11 @@ def n_finder(cof_lst: List[float], el_lst: List, number: int) -> float:
     Returns:
         float: number
     """
+    if number <= len(el_lst):
+        return el_lst[number-1]
     number -= len(cof_lst)
     matrix = matrix_to_power(matrix_creator(cof_lst), number)
-    return vector_multip(matrix, el_lst)[1]
+    return vector_multip(matrix, el_lst)[len(cof_lst)-1]
 
 
 if __name__ == "__main__":
