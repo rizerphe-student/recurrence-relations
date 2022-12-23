@@ -1,5 +1,4 @@
 """Approximate all solutions to a polynomial"""
-import math
 
 
 def find_derivative(terms: list[float]) -> list[float]:
@@ -73,13 +72,11 @@ def approximate_polynomial(
 
     # Find all ranges that contain a root
     ranges = []
-    sign = evaluate_polynomial(terms, min(points_of_interest))
     prev_loc = start
     for extreme in sorted(points_of_interest):
         new_sign = evaluate_polynomial(terms, extreme)
         ranges.append((prev_loc, extreme))
         prev_loc = extreme
-        sign = new_sign
     print("ranges", terms, ranges)
 
     # Find all roots in each range
