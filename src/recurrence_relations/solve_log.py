@@ -54,6 +54,8 @@ def matrix_to_power(matrix: list[list[float]], power: int) -> list[list[float]]:
     Returns:
         list[list[float]]: result
     """
+    if power == 1:
+        return matrix
     if power == 2:
         return multiply_matricies(matrix, matrix)
     subtask = power // 2
@@ -92,9 +94,3 @@ def n_finder(cof_lst: list[float], el_lst: list[float], number: int) -> float:
     number -= len(cof_lst)
     matrix = matrix_to_power(matrix_creator(cof_lst), number)
     return vector_multip(matrix, el_lst)[len(cof_lst) - 1]
-
-
-if __name__ == "__main__":
-    first_two = [2.0, 6.0]
-    cof_list = [-7.0, 18.0]
-    print(n_finder(cof_list, first_two, 4))
