@@ -23,10 +23,18 @@ def binary_search(
     precision: float,
     max_iter: int = 100,
 ) -> float | None:
-    """Find all solutions to a polynomial"""
+    """Find a solution to a polynomial within a range"""
     if evaluate_polynomial(terms, start) * evaluate_polynomial(terms, end) > 0:
+        # If the polynomial has the same sign at both ends, either there is no root
+        # or one of the ends is the extremum that's a root
         start_value = evaluate_polynomial(terms, start)
         end_value = evaluate_polynomial(terms, end)
+
+        # If one of the ends of the range is close to zero
+        # return the range end that is closer to zero
+
+        # The precision magic was figured out by trial and error
+        # and is not guaranteed to work for all cases
         if is_zero(
             start_value, precision ** (1 / 2) * max(abs(start_value), abs(end_value))
         ) or is_zero(
@@ -35,6 +43,7 @@ def binary_search(
             if abs(start_value) < abs(end_value):
                 return start
             return end
+        # Otherwise, there is no root in the range
         return None
     i = 0
     mid_value = 0.0
@@ -91,7 +100,7 @@ def approximate_recurrence_polynomial(
     term: list[float], start: float, end: float, precision: float
 ) -> list[float]:
     """Transforms list"""
-    terms = [1]
+    terms = [1.0]
     for elem in term:
         terms.append(-elem)
     return approximate_polynomial(terms, start, end, precision)
